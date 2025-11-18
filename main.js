@@ -159,3 +159,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
   renderEntries();
 });
+const students = [
+  {adm: "DP251", name: "Hudson"},
+  {adm: "DP252", name: "Mary"},
+  {adm: "DP253", name: "Brian"}
+];
+
+function login() {
+  let adm = document.getElementById("adm").value.trim();
+  let name = document.getElementById("name").value.trim().toLowerCase();
+
+  let found = students.find(
+    s => s.adm === adm && s.name.toLowerCase() === name
+  );
+
+  if (found) {
+    localStorage.setItem("student", JSON.stringify(found));
+    window.location.href = "member-dashboard.html";
+  } else {
+    document.getElementById("error").textContent = "Invalid credentials.";
+  }
+}

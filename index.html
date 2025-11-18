@@ -2,110 +2,30 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DPT 25 Admin - Marks Portal</title>
-</head>
-<body>
-  <h1>DPT 25 Admin - Marks Entry</h1>
-
-  <form id="marksForm">
-    <input type="text" id="admNo" placeholder="Admission Number" required><br><br>
-    <input type="text" id="name" placeholder="Student Name" required><br><br>
-    <input type="text" id="subject" placeholder="Subject" required><br><br>
-    <input type="number" id="marks" placeholder="Marks" required><br><br>
-    <button type="submit">Submit</button>
-  </form>
-
-  <h2>All Entries</h2>
-  <div id="output"></div>
-
-  <script type="module" src="main.js"></script>
-</body>
-</html>
-<h2>All Entries</h2>
-<div id="output"></div>
-
-<h2>Group Averages</h2>
-<div id="averages"></div>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DPT 25 Admin - Marks Portal</title>
+  <title>Admin Dashboard</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      margin: 20px;
-      background-color: #f9f9f9;
+      font-family: Arial;
+      padding: 40px;
+      background: #fafafa;
     }
-
-    h1, h2 {
-      text-align: center;
-    }
-
-    form {
-      max-width: 400px;
-      margin: 0 auto 20px auto;
-      padding: 15px;
-      background-color: #fff;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
-
-    input {
-      width: 100%;
-      padding: 8px;
-      margin: 5px 0;
-      box-sizing: border-box;
-    }
-
-    button {
-      padding: 8px 12px;
-      margin-top: 10px;
-      cursor: pointer;
-    }
-
-    #output, #averages {
-      max-width: 600px;
-      margin: 0 auto;
-      background-color: #fff;
-      padding: 15px;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      margin-bottom: 20px;
-    }
-
-    #output p, #averages p {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 5px 0;
-      border-bottom: 1px solid #eee;
-    }
-
-    #output button {
-      margin-left: 5px;
+    .box {
+      width: 400px;
+      margin: auto;
+      background: white;
+      padding: 30px;
+      border-radius: 6px;
+      box-shadow: 0 0 10px #ccc;
     }
   </style>
 </head>
 <body>
-  <h1>DPT 25 Admin - Marks Entry</h1>
 
-  <form id="marksForm">
-    <input type="text" id="admNo" placeholder="Admission Number" required>
-    <input type="text" id="name" placeholder="Student Name" required>
-    <input type="text" id="subject" placeholder="Subject" required>
-    <input type="number" id="marks" placeholder="Marks" required>
-    <button type="submit">Submit</button>
-  </form>
+<div class="box">
+  <h2>DPT 25 Admin Dashboard</h2>
+  <p>This is your admin area.</p>
+  <p>You can later add: marks upload, averages, positions, class list, editing, etc.</p>
+</div>
 
-  <h2>All Entries</h2>
-  <div id="output"></div>
-
-  <h2>Group Averages</h2>
-  <div id="averages"></div>
-
-  <script type="module" src="main.js"></script>
 </body>
 </html>

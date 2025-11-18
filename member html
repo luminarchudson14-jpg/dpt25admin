@@ -2,60 +2,81 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DPT 25 Member Portal</title>
+  <title>Member Login</title>
+  <style>
+    body {
+      font-family: Arial;
+      padding: 40px;
+      background: #f7f7f7;
+    }
+    .box {
+      width: 300px;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 6px;
+      box-shadow: 0 0 10px #ccc;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      background: #3366ff;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    #error {
+      color: red;
+      margin-top: 10px;
+    }
+  </style>
 </head>
 <body>
-  <h1>Member Portal</h1>
-  <p id="welcome"></p>
 
-  <h2>Your Marks</h2>
-  <div id="output"></div>
+<div class="box">
+  <h2>Student Login</h2>
 
-  <h2>Add Your Mark</h2>
-  <form id="marksForm">
-    <input type="text" id="subject" placeholder="Subject" required><br><br>
-    <input type="number" id="marks" placeholder="Marks" required><br><br>
-    <button type="submit">Submit</button>
-  </form>
+  <label>Admission Number</label>
+  <input type="text" id="adm">
 
-  <script type="module">
-    const currentUser = localStorage.getItem('currentUser');
-    const role = localStorage.getItem('role');
+  <label>Name</label>
+  <input type="text" id="name">
 
-    if(!currentUser || role !== 'member') {
-      alert("Access denied");
-      window.location.href = 'login.html';
+  <button onclick="login()">Login</button>
+
+  <p id="error"></p>
+</div>
+
+<script>
+  // List of approved students
+  const students = [
+    { adm: "DP251", name: "Hudson" },
+    { adm: "DP252", name: "Mary" },
+    { adm: "DP253", name: "Brian" }
+  ];
+
+  function login() {
+    let adm = document.getElementById("adm").value.trim();
+    let name = document.getElementById("name").value.trim().toLowerCase();
+
+    let found = students.find(s =>
+      s.adm === adm && s.name.toLowerCase() === name
+    );
+
+    if (found) {
+      localStorage.setItem("student", JSON.stringify(found));
+      window.location.href = "member-dashboard.html";
+    } else {
+      document.getElementById("error").textContent =
+        "Invalid admission number or name.";
     }
+  }
+</script>
 
-    document.getElementById('welcome').textContent = "Welcome, " + currentUser;
-
-    const form = document.getElementById('marksForm');
-    const output = document.getElementById('output');
-
-    let entries = JSON.parse(localStorage.getItem('marksEntries')) || [];
-
-    function render() {
-      output.innerHTML = '';
-      entries.filter(e => e.username === currentUser).forEach(e => {
-        const p = document.createElement('p');
-        p.textContent = `Subject: ${e.subject} | Marks: ${e.marks}`;
-        output.appendChild(p);
-      });
-    }
-
-    form.addEventListener('submit', e => {
-      e.preventDefault();
-      const subject = document.getElementById('subject').value;
-      const marks = document.getElementById('marks').value;
-
-      entries.push({ username: currentUser, subject, marks });
-      localStorage.setItem('marksEntries', JSON.stringify(entries));
-      render();
-      form.reset();
-    });
-
-    render();
-  </script>
 </body>
 </html>

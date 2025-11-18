@@ -3,96 +3,78 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DPT 25 Login</title>
+  <title>DPT25 Login</title>
   <style>
-    body { 
-      font-family: Arial; 
-      text-align: center; 
-      margin-top: 50px; 
-      background-color: #f9f9f9; 
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f7f7f7;
     }
-    input { 
-      padding: 10px; 
-      margin: 8px; 
-      width: 250px; 
-      border-radius: 5px;
+    .container {
+      text-align: center;
+      background: #fff;
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+    input {
+      width: 80%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 6px;
       border: 1px solid #ccc;
-      box-sizing: border-box;
     }
-    button { 
-      padding: 10px 20px; 
-      margin-top: 10px; 
-      cursor: pointer; 
-      border-radius: 5px;
+    button {
+      padding: 12px 25px;
+      font-size: 16px;
+      color: #fff;
+      background-color: #007BFF;
       border: none;
-      background-color: #4CAF50;
-      color: white;
-      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
     }
-    button:hover { background-color: #45a049; }
-    p { margin-top: 15px; }
+    button:hover {
+      background-color: #0056b3;
+    }
+    h1 { margin-bottom: 20px; color: #333; }
   </style>
 </head>
 <body>
-  <h1>DPT 25 Portal Login</h1>
-
-  <input type="text" id="username" placeholder="Username"><br>
-  <input type="password" id="password" placeholder="Password" style="display:none;"><br>
-  <button id="loginBtn">Login</button>
-  <p id="msg" style="color:red;"></p>
-  <p>Not registered yet? <a href="register.html">Register here</a></p>
+  <div class="container">
+    <h1>DPT25 Login</h1>
+    <form id="loginForm">
+      <input type="text" id="admission" placeholder="Admission Number" required><br>
+      <input type="password" id="password" placeholder="Password" required><br>
+      <button type="submit">Login</button>
+    </form>
+  </div>
 
   <script>
-    const loginBtn = document.getElementById('loginBtn');
-    const msg = document.getElementById('msg');
+    const loginForm = document.getElementById('loginForm');
 
-    loginBtn.onclick = () => {
-      const username = document.getElementById('username').value.trim();
-      const passwordInput = document.getElementById('password').value.trim();
+    loginForm.addEventListener('submit', function(e) {
+      e.preventDefault();
 
-      if(!username) return msg.textContent = "Enter your username";
+      const admission = document.getElementById('admission').value.trim();
+      const password = document.getElementById('password').value.trim();
 
-      let members = JSON.parse(localStorage.getItem('members')) || [];
-      const user = members.find(u => u.username === username);
+      // Get all registered users from localStorage
+      const members = JSON.parse(localStorage.getItem('members') || '[]');
+      const user = members.find(u => u.admission === admission && u.password === password);
 
-      if(!user) return msg.textContent = "Username not found";
-
-      if(user.firstLogin) {
-        // Generate OTP
-        const otp = Math.floor(100000 + Math.random() * 900000);
-        localStorage.setItem('otpFor_' + username, otp);
-        alert("Your OTP for first login: " + otp);
-
-        // Ask user to enter OTP
-        const enteredOtp = prompt("Enter the OTP you received:");
-        if(Number(enteredOtp) === otp) {
-          const newPassword = prompt("OTP verified! Now set a password for future logins:");
-          if(newPassword) {
-            user.password = newPassword;
-            user.firstLogin = false;
-            localStorage.setItem('members', JSON.stringify(members));
-            alert("Password set successfully! You can now log in normally.");
-            window.location.reload(); // reload page to switch to normal login
-          } else {
-            alert("Password not set. Try logging in again.");
-          }
+      if (user) {
+        if (user.role === 'admin') {
+          window.location.href = 'index.html'; // Admin portal
         } else {
-          alert("Incorrect OTP. Try logging in again.");
+          window.location.href = 'member.html'; // Member portal
         }
       } else {
-        // Normal login
-        if(passwordInput === user.password) {
-          localStorage.setItem('role', user.role);
-          localStorage.setItem('currentUser', user.username);
-          if(user.role === 'admin') window.location.href = 'index.html';
-          else window.location.href = 'member.html';
-        } else {
-          msg.textContent = "Invalid password";
-          document.getElementById('password').style.display = "inline";
-        }
+        alert('Incorrect admission number or password.');
       }
-    };
-  </script>if(user.role === 'admin') window.location.href = 'index.html';
-else window.location.href = 'member.html';
+    });
+  </script><script src="main.js"></script>
 </body>
 </html>

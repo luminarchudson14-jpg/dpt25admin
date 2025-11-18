@@ -2,19 +2,67 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DPT25 Admin Portal</title>
+  <title>Admin Login</title>
   <style>
-    body { font-family: Arial; display: flex; justify-content: center; align-items: center; height: 100vh; background: #f7f7f7; }
-    .container { text-align: center; background: #fff; padding: 40px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
-    a.button { display: block; margin: 15px 0; padding: 12px 25px; background: #28a745; color: #fff; text-decoration: none; border-radius: 8px; }
-    a.button:hover { background: #1e7e34; }
+    body {
+      font-family: Arial;
+      padding: 40px;
+      background: #e8e8e8;
+    }
+    .box {
+      width: 300px;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 6px;
+      box-shadow: 0 0 10px #ccc;
+    }
+    input, button {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+    }
+    button {
+      background: #222;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    #error { color: red; }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Admin Portal</h1>
-    <a class="button" href="login.html">Login</a>
-  </div>
+
+<div class="box">
+  <h2>Admin Login</h2>
+
+  <label>Username</label>
+  <input type="text" id="u">
+
+  <label>Password</label>
+  <input type="password" id="p">
+
+  <button onclick="check()">Login</button>
+
+  <p id="error"></p>
+</div>
+
+<script>
+  const adminUser = "dpt25admin";
+  const adminPass = "12345";
+
+  function check() {
+    let u = document.getElementById("u").value;
+    let p = document.getElementById("p").value;
+
+    if (u === adminUser && p === adminPass) {
+      window.location.href = "admin-dashboard.html";
+    } else {
+      document.getElementById("error").textContent =
+        "Wrong username or password.";
+    }
+  }
+</script>
+
 </body>
 </html>
