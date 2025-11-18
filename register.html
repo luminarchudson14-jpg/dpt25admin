@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DPT 25 Member Registration</title>
+  <style>
+    body { 
+      font-family: Arial, sans-serif; 
+      text-align: center; 
+      margin-top: 50px; 
+      background-color: #f9f9f9;
+    }
+    input { 
+      padding: 10px; 
+      margin: 8px; 
+      width: 250px; 
+      box-sizing: border-box; 
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    button { 
+      padding: 10px 20px; 
+      margin-top: 10px; 
+      cursor: pointer; 
+      border-radius: 5px;
+      border: none;
+      background-color: #4CAF50;
+      color: white;
+      font-weight: bold;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    p { margin-top: 15px; }
+  </style>
+</head>
+<body>
+  <h1>DPT 25 Member Registration</h1>
+
+  <input type="text" id="username" placeholder="Choose a Username"><br>
+  <button id="registerBtn">Register</button>
+
+  <p id="msg" style="color:green;"></p>
+  <p>Already registered? <a href="login.html">Login here</a></p>
+
+  <script>
+    const registerBtn = document.getElementById('registerBtn');
+    const msg = document.getElementById('msg');
+
+    registerBtn.onclick = () => {
+      const username = document.getElementById('username').value.trim();
+      if (!username) return alert("Please enter a username");
+
+      // Load existing members from localStorage
+      let members = JSON.parse(localStorage.getItem('members')) || [
+        { username: 'dpt25admin', password: 'admin123', role: 'admin', firstLogin: false }
+      ];
+
+      if (members.find(m => m.username === username)) {
+        return alert("Username already exists. Choose another.");
+      }
+
+      // Add new member with firstLogin = true
+      members.push({ username, password: null, firstLogin: true, role: 'member' });
+      localStorage.setItem('members', JSON.stringify(members));
+
+      msg.textContent = "Registered successfully! You can now login to set your password.";
+      document.getElementById('username').value = '';
+    };
+  </script>
+</body>
+</html>

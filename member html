@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DPT 25 Member Portal</title>
+</head>
+<body>
+  <h1>Member Portal</h1>
+  <p id="welcome"></p>
+
+  <h2>Your Marks</h2>
+  <div id="output"></div>
+
+  <h2>Add Your Mark</h2>
+  <form id="marksForm">
+    <input type="text" id="subject" placeholder="Subject" required><br><br>
+    <input type="number" id="marks" placeholder="Marks" required><br><br>
+    <button type="submit">Submit</button>
+  </form>
+
+  <script type="module">
+    const currentUser = localStorage.getItem('currentUser');
+    const role = localStorage.getItem('role');
+
+    if(!currentUser || role !== 'member') {
+      alert("Access denied");
+      window.location.href = 'login.html';
+    }
+
+    document.getElementById('welcome').textContent = "Welcome, " + currentUser;
+
+    const form = document.getElementById('marksForm');
+    const output = document.getElementById('output');
+
+    let entries = JSON.parse(localStorage.getItem('marksEntries')) || [];
+
+    function render() {
+      output.innerHTML = '';
+      entries.filter(e => e.username === currentUser).forEach(e => {
+        const p = document.createElement('p');
+        p.textContent = `Subject: ${e.subject} | Marks: ${e.marks}`;
+        output.appendChild(p);
+      });
+    }
+
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      const subject = document.getElementById('subject').value;
+      const marks = document.getElementById('marks').value;
+
+      entries.push({ username: currentUser, subject, marks });
+      localStorage.setItem('marksEntries', JSON.stringify(entries));
+      render();
+      form.reset();
+    });
+
+    render();
+  </script>
+</body>
+</html>
